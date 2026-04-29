@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-import redisClient from '../db/RedisClient.js';
+import redisClient from '../db/redisClient.js';
 
 // 1. Broadcast new asset to the Noida Network
 export const addInventoryItem = async (req, res) => {
