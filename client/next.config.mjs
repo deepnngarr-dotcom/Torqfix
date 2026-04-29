@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    allowedDevOrigins: ['localhost:3000', '127.0.0.1:3000']
-  }
+  // Standard configuration for Next.js 16
+  // Experimental options that are unrecognized have been removed to pass the Vercel build.
 };
 
 export default nextConfig;
