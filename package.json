@@ -1,0 +1,16 @@
+{
+  "name": "torqfix-root",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "framer-motion": "^12.38.0"
+  }
+}
