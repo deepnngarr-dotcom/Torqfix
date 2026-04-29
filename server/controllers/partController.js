@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-import redisClient from '../db/RedisClient.js';
+import redisClient from '../db/redisClient.js';
 
 export const createPart = async (req, res) => {
   try {
