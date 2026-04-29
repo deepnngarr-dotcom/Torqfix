@@ -2,46 +2,58 @@ import fs from 'fs';
 import path from 'path';
 import { Sequelize, DataTypes } from 'sequelize';
 import { fileURLToPath, pathToFileURL } from 'url';
+import dotenv from 'dotenv';
 
-// 1. Setup paths for ES Modules
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 2. Import config using the new 'with' syntax (Required for Node v22+)
+// Import config
 import configData from '../config/config.json' with { type: 'json' };
-
 const env = process.env.NODE_ENV || 'development';
 const config = configData[env];
 
-// 3. Initialize Sequelize
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
 const db = {};
+
+// 🚀 3. Initialize Sequelize with Production Priority
+let sequelize;
+if (process.env.DATABASE_URL) {
+  // Production Handshake (Render/Cloud)
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    protocol: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false // 🔒 Required for Render SSL connections
+      }
+    },
+    logging: false
+  });
+} else {
+  // Local Farmhouse Development
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
 // 4. Read and import all model files
 const files = fs.readdirSync(__dirname).filter(file => 
-  file!== 'index.js' && file.endsWith('.js')
+  file !== 'index.js' && file.endsWith('.js')
 );
 
 for (const file of files) {
   const modelPath = pathToFileURL(path.join(__dirname, file)).href;
   const modelModule = await import(modelPath);
-  
-  // This supports the 'export default (sequelize, DataTypes) =>...' format
   const model = modelModule.default(sequelize, DataTypes);
   db[model.name] = model;
 }
 
-// 5. Handle Associations (Foreign Keys)
+// 5. Handle Associations
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
-    //db.Booking.belongsTo(db.Part, { foreignKey: 'toolId', as: 'tool' });
   }
 });
-{/*if (db.Booking && db.Part) {
-  db.Booking.belongsTo(db.Part, { foreignKey: 'toolId', as: 'tool' });
-  db.Part.hasMany(db.Booking, { foreignKey: 'toolId', as: 'bookings' });
-}*/}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

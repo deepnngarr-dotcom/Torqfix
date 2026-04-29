@@ -7,11 +7,11 @@ import routes from './routes/index.js';
 dotenv.config();
 const app = express();
 
-// 🚀 DYNAMIC CORS: Accepts local dev or the production frontend URL
+// 🚀 DYNAMIC CORS: Optimized for production handshakes
 const allowedOrigins = [
   'http://localhost:3000', 
   'http://127.0.0.1:3000',
-  process.env.FRONTEND_URL // Add this in Render/Vercel settings later
+  process.env.FRONTEND_URL 
 ];
 
 app.use(cors({
@@ -33,20 +33,25 @@ app.use(express.json());
 app.use('/api', routes);
 
 const startServer = async () => {
+  // 1. Define PORT immediately for Render's health check
+  const PORT = process.env.PORT || 5005;
+
   try {
+    // 2. Attempt Database Handshake
     await db.sequelize.authenticate();
     console.log('PostgreSQL Connected...');
     
-    // ⚠️ 'alter: true' is fine for your MCA MVP, but be careful with production data
     await db.sequelize.sync({ alter: true });
     console.log('Database synchronized');
-
-    // Render/Vercel will provide the PORT automatically
-    const PORT = process.env.PORT || 5005;
-    app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
   } catch (err) {
+    // 🚀 If DB fails, we log it but still start the server to avoid Port errors
     console.error('Database connection failed:', err.message);
   }
+
+  // 3. Bind to Port 0.0.0.0 (Required for Render)
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 };
 
 startServer();
