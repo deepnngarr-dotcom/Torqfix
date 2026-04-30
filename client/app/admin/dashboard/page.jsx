@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
-import api from '../../utils/api';
+
+import api from '@/utils/api';
 
 export default function AdminDashboard() {
   const [tools, setTools] = useState([]);

@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
-import api from '../../utils/api';
+
+import api from '@/utils/api';
 
 export default function Register() {
   const [role, setRole] = useState('user'); // Default state is lowercase 'user'

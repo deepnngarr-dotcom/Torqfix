@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import axios from 'axios';
+
 import ToolCard from '../../../components/ToolCard';
 import DiscoveryMap from '../../../components/DiscoveryMap'; // We'll pass items as props
-import api from '../../../utils/api';
+import api from '@/utils/api';
 
 export default function CategoryPage() {
   const { slug } = useParams();

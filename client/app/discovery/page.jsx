@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import axios from 'axios';
+
 import { useRouter } from 'next/navigation'; // 1. Added for navigation
 import ToolSidebar from '../../components/ToolSidebar';
 import HandoverCamera from '../../components/HandoverCamera';
-import api from '../../utils/api';
+import api from '@/utils/api';
 
 const DiscoveryMap = dynamic(
   () => import('../../components/DiscoveryMap'),

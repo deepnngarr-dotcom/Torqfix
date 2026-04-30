@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
+
 import ToolCard from '../components/ToolCard';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../utils/api';
+import api from '@/utils/api';
 
 const CASE_STUDIES = [
   {

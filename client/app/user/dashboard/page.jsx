@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import api from '../../../utils/api';
+
+import api from '@/utils/api';
 
 const UserDashboard = () => {
   const [data, setData] = useState({ subscriptions: [], orderHistory: [] });

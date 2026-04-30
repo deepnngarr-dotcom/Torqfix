@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import axios from 'axios';
+
 import dynamic from 'next/dynamic'; // 🚀 Required for Leaflet SSR
-import api from '../../utils/api';
+import api from '@/utils/api';
 
 // 🚀 DYNAMIC IMPORT: Load the map only on the client side
 const MapSection = dynamic(() => import('../../vendor/dashboard/MapSection'), { 

@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import dynamic from 'next/dynamic';
-import api from '../../utils/api';
+import api from '@/utils/api';
 
 const MapSection = dynamic(() => import('./MapSection'), { 
   ssr: false,
