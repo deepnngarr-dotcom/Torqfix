@@ -16,23 +16,24 @@ const config = configData[env];
 
 const db = {};
 
-// 🚀 3. Initialize Sequelize with Production Priority
 let sequelize;
 if (process.env.DATABASE_URL) {
-  // Production Handshake (Render/Cloud)
+  // Check if we are in production
+  const isProduction = process.env.NODE_ENV === 'production';
+
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     protocol: 'postgres',
-    dialectOptions: {
+    dialectOptions: isProduction ? {
       ssl: {
         require: true,
-        rejectUnauthorized: false // 🔒 Required for Render SSL connections
+        rejectUnauthorized: false // 🔒 Required for Render SSL
       }
-    },
+    } : {}, // 🚀 Empty object disables SSL for local development
     logging: false
   });
 } else {
-  // Local Farmhouse Development
+  // Fallback to config.json if DATABASE_URL is missing
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 

@@ -111,7 +111,8 @@ function DiscoveryPage() {
                 <div className="space-y-2">
                   {logs.slice(0,3).map(log => (
                     <p key={log.id} className="text-[10px] text-gray-400 uppercase">
-                      <span className="text-white">[{log.User.name.split(' ')[0]}]</span> Acquired {log.Tool.name}
+                      {/*<span className="text-white">[{log.User.name.split(' ')[0]}]</span> Acquired {log.Tool.name}*/}
+                      <span className="text-white">[{log.user?.name?.split(' ')[0] || 'System'}]</span> Acquired {log.tool?.name || 'Item'}
                     </p>
                   ))}
                 </div>
