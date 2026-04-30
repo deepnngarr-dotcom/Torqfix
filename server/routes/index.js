@@ -6,7 +6,9 @@ import partRoutes from './partRoutes.js';
 import userRoutes from './userRoutes.js';     
 import vendorRoutes from './vendorRoutes.js'; 
 import bookingRoutes from './bookingRoutes.js';
+import activityRoutes from './activityRoutes.js';
 
+router.use('/activity', activityRoutes); // Access via /api/activity
 router.use('/auth', authRoutes);
 router.use('/parts', partRoutes);
 router.use('/user', userRoutes);     // Access via /api/user
