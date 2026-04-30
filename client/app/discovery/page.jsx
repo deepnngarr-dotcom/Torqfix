@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation'; // 1. Added for navigation
 import ToolSidebar from '../../components/ToolSidebar';
 import HandoverCamera from '../../components/HandoverCamera';
+import api from '../../utils/api';
 
 const DiscoveryMap = dynamic(
   () => import('../../components/DiscoveryMap'),
@@ -26,7 +27,7 @@ function DiscoveryPage() {
     const initializeDiscovery = async () => {
       // Fetch Activity Logs
       try {
-        const logRes = await axios.get('http://localhost:5005/api/activity/logs');
+        const logRes = await api.get('/activity/logs');
         setLogs(logRes.data);
       } catch (err) { console.error("Error fetching logs:", err); }
 
@@ -35,8 +36,8 @@ function DiscoveryPage() {
         navigator.geolocation.getCurrentPosition(async (pos) => {
           const { latitude, longitude } = pos.coords;
           try {
-            const res = await axios.get(
-              `http://localhost:5005/api/parts/nearby?lat=${latitude}&lng=${longitude}&category=ALL`
+            const res = await api.get(
+              `/parts/nearby?lat=${latitude}&lng=${longitude}&category=ALL`
             );
             setTools(res.data);
           } catch (err) { console.error("Error fetching inventory:", err); }

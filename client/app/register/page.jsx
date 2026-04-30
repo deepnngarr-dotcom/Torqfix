@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
+import api from '../../utils/api';
 
 export default function Register() {
   const [role, setRole] = useState('user'); // Default state is lowercase 'user'
@@ -17,7 +18,7 @@ export default function Register() {
     e.preventDefault();
     try {
       // Sends the current 'role' state ('user' or 'vendor')
-      const res = await axios.post('http://localhost:5005/api/auth/register', { ...formData, role });
+      const res = await api.post('/auth/register', { ...formData, role });
       alert("Registration Successful! Please Login.");
       window.location.href = '/login';
     } catch (err) {

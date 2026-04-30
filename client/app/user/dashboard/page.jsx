@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import api from '../../../utils/api';
 
 const UserDashboard = () => {
   const [data, setData] = useState({ subscriptions: [], orderHistory: [] });
@@ -11,7 +12,7 @@ const UserDashboard = () => {
     const fetchHistory = async () => {
       try {
         const token = localStorage.getItem('torqfix_token'); 
-        const { data } = await axios.get('http://localhost:5005/api/user/dashboard', {
+        const { data } = await api.get('/user/dashboard', {
           headers: { Authorization: `Bearer ${token}` }
         });
         

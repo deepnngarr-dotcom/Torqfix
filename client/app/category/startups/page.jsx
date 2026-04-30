@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ToolCard from '../../../components/ToolCard';
+import api from '../../../utils/api';
 
 export default function StartupsPage() {
   const [items, setItems] = useState([]);
@@ -10,7 +11,7 @@ export default function StartupsPage() {
     const fetchStartupTech = async () => {
       try {
         // Fetching Robotics & Drone tech specifically for Startup needs
-        const res = await axios.get(`http://localhost:5005/api/parts/all`);
+        const res = await api.get('/parts/all');
         const startupTech = res.data.filter(item => 
           item.category === 'ROBOTICS' || item.name.toLowerCase().includes('drone')
         );

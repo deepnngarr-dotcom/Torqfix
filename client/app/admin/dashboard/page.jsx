@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import api from '../../utils/api';
 
 export default function AdminDashboard() {
   const [tools, setTools] = useState([]);
@@ -12,8 +13,8 @@ export default function AdminDashboard() {
     const fetchAdminData = async () => {
       try {
         const [toolsRes, statsRes] = await Promise.all([
-          axios.get('http://localhost:5005/api/parts/all'),
-          axios.get('http://localhost:5005/api/admin/stats') // Assume this endpoint exists
+          api.get('/parts/all'),
+          api.get('/admin/stats') // Assume this endpoint exists
         ]);
         setTools(toolsRes.data);
         setStats(statsRes.data);

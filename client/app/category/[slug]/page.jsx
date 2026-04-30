@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import axios from 'axios';
 import ToolCard from '../../../components/ToolCard';
 import DiscoveryMap from '../../../components/DiscoveryMap'; // We'll pass items as props
+import api from '../../../utils/api';
 
 export default function CategoryPage() {
   const { slug } = useParams();
@@ -12,7 +13,7 @@ export default function CategoryPage() {
   useEffect(() => {
     const fetchData = async () => {
       // ORDER BY createdAt DESC is handled in the backend
-      const res = await axios.get(`http://localhost:5005/api/parts/category/${slug}`);
+      const res = await api.get(`/parts/category/${slug}`);
       setItems(res.data);
     };
     fetchData();

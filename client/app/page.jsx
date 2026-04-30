@@ -4,6 +4,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import ToolCard from '../components/ToolCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import api from '../utils/api';
 
 const CASE_STUDIES = [
   {
@@ -128,7 +129,7 @@ export default function LandingPage() {
 useEffect(() => {
   const fetchTools = async () => {
     try {
-      const res = await axios.get('http://localhost:5005/api/parts/all');
+      const res = await api.get('/parts/all');
      
       setItems(res.data); 
     } catch (err) {

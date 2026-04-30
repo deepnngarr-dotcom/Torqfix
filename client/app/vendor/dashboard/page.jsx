@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
+import api from '../../utils/api';
 
 const MapSection = dynamic(() => import('./MapSection'), { 
   ssr: false,
@@ -33,7 +34,7 @@ export default function VendorDashboard() {
   const fetchDashboardData = async () => {
     try {
       const token = localStorage.getItem('torqfix_token');
-      const res = await axios.get('http://localhost:5005/api/vendor/dashboard', {
+      const res = await api.get('/vendor/dashboard', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAssets(res.data.myAssets);
@@ -53,7 +54,7 @@ export default function VendorDashboard() {
   const handleAcceptBooking = async (bookingId) => {
     try {
       const token = localStorage.getItem('torqfix_token');
-      await axios.patch(`http://localhost:5005/api/vendor/bookings/${bookingId}/accept`, {}, {
+      await api.patch(`/vendor/bookings/${bookingId}/accept`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Subscription Activated!");
@@ -70,7 +71,7 @@ export default function VendorDashboard() {
       // 🚀 Payload includes spatial coordinates from MapSection
       const payload = { ...formData, lat: coords.lat, lng: coords.lng };
       const token = localStorage.getItem('torqfix_token');
-      await axios.post('http://localhost:5005/api/parts', payload, {
+      await api.post('/parts', payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Node Successfully Broadcasted!");

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 import dynamic from 'next/dynamic'; // 🚀 Required for Leaflet SSR
+import api from '../../utils/api';
 
 // 🚀 DYNAMIC IMPORT: Load the map only on the client side
 const MapSection = dynamic(() => import('../../vendor/dashboard/MapSection'), { 
@@ -29,7 +30,7 @@ export default function PartDetailPage() {
 
     const fetchPart = async () => {
       try {
-        const res = await axios.get(`http://localhost:5005/api/parts/${id}`);
+        const res = await api.get(`/parts/${id}`);
         setPart(res.data);
       } catch (err) {
         console.error("❌ Error fetching node:", err);
@@ -55,7 +56,7 @@ export default function PartDetailPage() {
     }
 
     try {
-      const res = await axios.post('http://localhost:5005/api/bookings/initiate', {
+      const res = await api.post('/bookings/initiate', {
         toolId: part.id,
         type: type,
         duration: type === 'RENTAL' ? duration : 0

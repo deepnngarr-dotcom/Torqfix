@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import api from '../../utils/api';
 
 export default function Login() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5005/api/auth/login', formData);
+      const res = await api.post('/auth/login', formData);
       
       // 🔄 Unified Storage Keys: Matching PartDetailPage
       localStorage.setItem('torqfix_token', res.data.token);
