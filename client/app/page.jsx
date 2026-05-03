@@ -277,21 +277,21 @@ export default function LandingPage() {
 
             {/* --- NEW STRATEGIC LINKS --- */}
             <div className="grid grid-cols-1 gap-4 pt-6 border-t border-gray-900">
-              <p className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] mb-2">Network Intelligence</p>
+              <p className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] mb-2">Network Research</p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/about/ecosystem" className="group">
-                  <span className="text-[11px] font-black uppercase italic tracking-tighter border-b border-gray-800 group-hover:border-blue-600 group-hover:text-blue-500 transition-all pb-1">
-                    01 Ecosystem Audit →
+                  <span className="text-[14px] font-black uppercase italic tracking-tighter border-b border-gray-800 group-hover:border-blue-600 group-hover:text-blue-500 transition-all pb-1">
+                   Ecosystem 
                   </span>
                 </Link>
                 <Link href="/about/opportunity" className="group">
-                  <span className="text-[11px] font-black uppercase italic tracking-tighter border-b border-gray-800 group-hover:border-blue-600 group-hover:text-blue-500 transition-all pb-1">
-                    02 Market Potential →
+                  <span className="text-[14px] font-black uppercase italic tracking-tighter border-b border-gray-800 group-hover:border-blue-600 group-hover:text-blue-500 transition-all pb-1">
+                    The Opportunity 
                   </span>
                 </Link>
                 <Link href="/about/challenges" className="group">
-                  <span className="text-[11px] font-black uppercase italic tracking-tighter border-b border-gray-800 group-hover:border-blue-600 group-hover:text-blue-500 transition-all pb-1">
-                    03 Risk & AI Audit →
+                  <span className="text-[14px] font-black uppercase italic tracking-tighter border-b border-gray-800 group-hover:border-blue-600 group-hover:text-blue-500 transition-all pb-1">
+                   Challenges 
                   </span>
                 </Link>
               </div>
@@ -322,7 +322,7 @@ export default function LandingPage() {
             {/* Header Section */}
             <header className="mb-16 flex justify-between items-end">
               <div>
-                <h2 className="text-2xl font-black uppercase italic text-white tracking-tighter">The Economic Blueprint</h2>
+                <h2 className="text-2xl font-black uppercase italic text-white tracking-tighter">The Economics Involved</h2>
                 <p className="text-gray-400 text-[10px] tracking-[0.4em] uppercase mt-2">Case Study: {data.asset}</p>
               </div>
               
@@ -417,7 +417,7 @@ export default function LandingPage() {
       <section className="py-24 bg-[#0d0d0d] border-b border-gray-900">
         <div className="max-w-7xl mx-auto px-10">
           <header className="mb-20 text-center">
-            <h2 className="text-3xl font-black uppercase italic tracking-tighter text-blue-600">The Procurement Pipeline</h2>
+            <h2 className="text-3xl font-black uppercase italic tracking-tighter text-blue-600">How The Platform Works</h2>
             <p className="text-gray-500 text-[10px] tracking-[0.5em] uppercase mt-3">From Requirement to site-delivery in 7 critical steps</p>
           </header>
 
@@ -575,6 +575,26 @@ export default function LandingPage() {
             </div>
           )}
       </section>
+
+          <div className="max-w-7xl mx-auto px-10 mb-20">
+            <header className="mb-12">
+              <h2 className="text-3xl font-black uppercase italic tracking-tighter text-blue-600">
+                Subscription Tiers
+              </h2>
+              <p className="text-gray-500 text-[10px] tracking-[0.4em] uppercase mt-2">Tailored access levels for diverse prototyping needs</p>
+            </header>
+          </div>
+       <section className="bg-[#111111] p-8 border border-gray-800">
+          <h3 className="text-white text-xs font-black uppercase tracking-widest mb-6">Tiered Subscription Model</h3>
+            <div className="space-y-6">
+              {['Dry Lease', 'Assisted Lease', 'Job-Work'].map((tier, idx) => (
+                <div key={tier} className="flex justify-between items-center border-b border-gray-900 pb-4">
+                  <p className="text-sm font-bold uppercase italic tracking-tighter">Level 0{idx+1} {tier}</p>
+                  <span className="text-[8px] text-gray-600 font-black">Available</span>
+                </div>
+              ))}
+          </div>
+        </section>
 
       {/* Footer */}
       <footer className="bg-[#0a0a0a] border-t border-gray-900 pt-20 pb-10">
