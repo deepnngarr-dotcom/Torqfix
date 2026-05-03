@@ -86,6 +86,7 @@ export default function LandingPage() {
 
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(8);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
@@ -126,18 +127,23 @@ export default function LandingPage() {
   }, [loading, hasMore]);
 
 // Inside your LandingPage component
-useEffect(() => {
+    useEffect(() => {
   const fetchTools = async () => {
     try {
       const res = await api.get('/parts/all');
+      
+      // 🚀 Sort by most recent date (descending) before setting state
+      const broadcastOrder = res.data.sort((a, b) => 
+        new Date(b.createdAt) - new Date(a.createdAt)
+      );
      
-      setItems(res.data); 
+      setItems(broadcastOrder); 
     } catch (err) {
-      console.error(err);
+      console.error("❌ Network Sync Error:", err);
     }
   };
   fetchTools();
-}, []); // Empty dependency array
+    }, []);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-gray-700 selection:text-white">
@@ -211,7 +217,7 @@ useEffect(() => {
             {/* Pivot 1: Market Size */}
             <div className="space-y-4 border-l border-gray-800 pl-8 transition-all duration-500 hover:border-blue-600 group">
               <h3 className="text-4xl font-black italic text-white group-hover:text-blue-500">600+</h3>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] leading-relaxed">
                 Agile MSMEs & Deep Tech <br/> Startups in Noida Corridor
               </p>
             </div>
@@ -219,7 +225,7 @@ useEffect(() => {
             {/* Pivot 2: Economic Impact */}
             <div className="space-y-4 border-l border-gray-800 pl-8 transition-all duration-500 hover:border-blue-600 group">
               <h3 className="text-4xl font-black italic text-white group-hover:text-blue-500">70% </h3>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] leading-relaxed">
                 Reduction in Initial <br/> CapEx for Prototyping 
               </p>
             </div>
@@ -227,15 +233,15 @@ useEffect(() => {
             {/* Pivot 3: Network Density */}
             <div className="space-y-4 border-l border-gray-800 pl-8 transition-all duration-500 hover:border-blue-600 group">
               <h3 className="text-4xl font-black italic text-white group-hover:text-blue-500">40+</h3>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] leading-relaxed">
                 Hyper-Local Verified <br/> Inventory Nodes 
               </p>
             </div>
 
             {/* Pivot 4: Fulfillment Velocity */}
             <div className="space-y-4 border-l border-gray-800 pl-8 transition-all duration-500 hover:border-blue-600 group">
-              <h3 className="text-4xl font-black italic text-white group-hover:text-blue-500">45-70 min</h3>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
+              <h3 className="text-4xl font-black italic text-blue-600 group-hover:text-white">45-70 min</h3>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] leading-relaxed">
                 Average P2P Tool <br/> Delivery Time
               </p>
             </div>
@@ -250,7 +256,7 @@ useEffect(() => {
             <div className="space-y-6">
               <span className="text-blue-600 font-bold tracking-widest text-sm uppercase mb-2 block">For Every CTO / MD</span>
               <h2 className="text-4xl font-black uppercase italic leading-tight">
-                Book a subscription <br/> <span className="text-gray-600">for </span><span className="text-blue-600">precision assets</span>
+                Book a subscription <br/> <span className="text-white">for </span><span className="text-blue-600">precision assets</span>
               </h2>
               <p className="text-gray-400 text-sm leading-relaxed max-w-md">
                 Precision Assets for Prototyping, Testing, Manufacturing, Calibration, and Maintenance. TorqFix is the infrastructure for Noida’s <span className="text-white font-bold">600+ hardware innovators</span>. We bridge the CAPEX gap by transforming idle industrial assets into a hyper-local, subscription-based supply chain.
@@ -317,7 +323,7 @@ useEffect(() => {
             <header className="mb-16 flex justify-between items-end">
               <div>
                 <h2 className="text-2xl font-black uppercase italic text-white tracking-tighter">The Economic Blueprint</h2>
-                <p className="text-gray-600 text-[10px] tracking-[0.4em] uppercase mt-2">Case Study: {data.asset}</p>
+                <p className="text-gray-400 text-[10px] tracking-[0.4em] uppercase mt-2">Case Study: {data.asset}</p>
               </div>
               
               <div className="flex gap-4">
@@ -325,6 +331,7 @@ useEffect(() => {
                 <button onClick={nextSlide} className="p-4 border border-gray-800 hover:bg-white hover:text-black transition text-white">→</button>
               </div>
             </header>
+
 
         {/* Animated Container */}
           <div className="relative min-h-[450px]">
@@ -410,15 +417,15 @@ useEffect(() => {
       <section className="py-24 bg-[#0d0d0d] border-b border-gray-900">
         <div className="max-w-7xl mx-auto px-10">
           <header className="mb-20 text-center">
-            <h2 className="text-3xl font-black uppercase italic tracking-tighter text-white">The Procurement Pipeline</h2>
-            <p className="text-gray-600 text-[10px] tracking-[0.5em] uppercase mt-3">From Requirement to site-delivery in 7 critical steps</p>
+            <h2 className="text-3xl font-black uppercase italic tracking-tighter text-blue-600">The Procurement Pipeline</h2>
+            <p className="text-gray-500 text-[10px] tracking-[0.5em] uppercase mt-3">From Requirement to site-delivery in 7 critical steps</p>
           </header>
 
           {/* Staggered Timeline Flow */}
           <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-6 text-center lg:text-left relative">
             
             {/* Desktop connecting line */}
-            <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gray-900 z-0 hidden lg:block" />
+            <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gray-600 z-0 hidden lg:block" />
 
             {[
               { step: '01', title: 'Gap Identification', desc: 'Startup defines critical engineering asset gap for development.' },
@@ -438,7 +445,7 @@ useEffect(() => {
                   <span className="text-5xl font-black text-white italic opacity-10 group-hover:opacity-100 group-hover:text-blue-500 transition-all duration-700">
                     {item.step}
                   </span>
-                  <h4 className="text-[11px] font-bold text-gray-200 uppercase tracking-widest leading-snug h-8">
+                  <h4 className="text-[11px] font-bold text-gray-100 uppercase tracking-widest leading-snug h-8">
                     {item.title}
                   </h4>
                   <p className="text-[9px] text-gray-500 uppercase tracking-widest leading-relaxed">
@@ -447,7 +454,7 @@ useEffect(() => {
                 </div>
                 
                 {/* Aesthetic "Site Data" line */}
-                <p className="text-[7px] font-mono text-gray-800 uppercase tracking-tighter mt-6 group-hover:text-gray-700">
+                <p className="text-[7px] font-mono text-gray-600 uppercase tracking-tighter mt-6 group-hover:text-gray-700">
                   Node_{index+1}.Noida_Zone.active
                 </p>
               </div>
@@ -465,6 +472,12 @@ useEffect(() => {
 
       {/* 3. Status Grid (Glassmorphism) */}
       <section className="max-w-7xl mx-auto px-10 pb-20">
+        {/* 🚀 ADDED SECTION HEADING */}
+          <header className="mb-12">
+              <h2 className="text-3xl font-black uppercase italic tracking-tighter text-white">
+                Operational Categories
+              </h2>
+          </header>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
           {/* Example for AUTOMOTIVE - Line 49 approx */}
           <Link href="/category/automotive" className="p-12 bg-[#111111] border border-gray-900 group hover:border-blue-600 transition duration-500">
@@ -517,45 +530,123 @@ useEffect(() => {
       </section>
       
 
+     
       {/* 4. Live Global Feed */}
       <section className="max-w-7xl mx-auto px-10 pb-32">
-        <header className="mb-12 flex justify-between items-end">
-          <div>
-            <h2 className="text-3xl font-black uppercase italic">Live Network Feed</h2>
-            <p className="text-gray-600 text-[10px] tracking-widest uppercase mt-2">Aggregating all nodes within the network</p>
-          </div>
-          <div className="text-right">
-             <span className="text-green-500 font-mono text-xs animate-pulse">● BROADCASTING LIVE</span>
-          </div>
-        </header>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-         {items.map((item, index) => {
-            if (index === items.length - 1) {
-              // Combine ID with index for absolute uniqueness
-              return (
-                <div ref={lastItemRef} key={`${item.id}-${index}`}>
-                  <ToolCard item={item} />
-                </div>
-              );
-            }
-            return <ToolCard key={`${item.id}-${index}`} item={item} />;
-          })}
-        </div>
-
-        {loading && (
-          <div className="flex justify-center mt-20">
-            <div className="w-10 h-0.5 bg-gray-800 relative overflow-hidden">
-              <div className="absolute inset-0 bg-white animate-loading-bar"></div>
+          <header className="mb-12 flex justify-between items-end">
+            <div>
+              <h2 className="text-3xl text-blue-600 font-black uppercase italic">Live Network Feed</h2>
+              <p className="text-gray-500 text-[10px] tracking-widest uppercase mt-2">
+                Aggregating all nodes within the network
+              </p>
             </div>
+            <div className="text-right">
+              <span className="text-green-500 font-mono text-xs animate-pulse">● BROADCASTING LIVE</span>
+            </div>
+          </header>
+
+          {/* 🚀 Grid now slices items to visibleCount */}
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {items.slice(0, visibleCount).map((item, index) => (
+              <ToolCard key={`${item.id}-${index}`} item={item} />
+            ))}
           </div>
-        )}
+
+          {/* 🚀 Load More Button */}
+          {visibleCount < items.length && (
+            <div className="mt-20 flex justify-center">
+              <button 
+                onClick={() => setVisibleCount(prev => prev + 8)}
+                className="group relative px-12 py-5 border border-gray-800 bg-transparent overflow-hidden transition-all hover:border-blue-600"
+              >
+                <div className="absolute inset-0 w-0 bg-blue-600 transition-all duration-[400ms] ease-out group-hover:w-full"></div>
+                <span className="relative text-[10px] font-black uppercase tracking-[0.4em] text-white group-hover:text-white">
+                  View More
+                </span>
+              </button>
+            </div>
+          )}
+
+          {loading && (
+            <div className="flex justify-center mt-20">
+              <div className="w-10 h-0.5 bg-gray-800 relative overflow-hidden">
+                <div className="absolute inset-0 bg-white animate-loading-bar"></div>
+              </div>
+            </div>
+          )}
       </section>
 
       {/* Footer */}
-      <footer className="py-10 border-t border-gray-900 text-center">
-        <p className="text-[10px] uppercase tracking-[0.5em] text-gray-700">© 2026 TorqFix Engineering Solutions — Built for Efficiency</p>
-      </footer>
+      <footer className="bg-[#0a0a0a] border-t border-gray-900 pt-20 pb-10">
+          <div className="max-w-7xl mx-auto px-10">
+            
+            {/* Upper Footer: Strategic Alignment */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+              
+              {/* Brand Essence */}
+              <div className="col-span-1 md:col-span-2 space-y-6">
+                <h2 className="text-2xl font-black uppercase italic tracking-tighter text-white">TorqFix</h2>
+                <p className="text-gray-500 text-[11px] leading-relaxed max-w-md uppercase tracking-wider">
+                  The quick-commerce infrastructure for hardware innovators. 
+                  Bridging the CapEx gap for 600+ MSMEs and Startups through 
+                  a first-of-its-kind hyper-local rental model. Delivered in under 45 minutes.
+                </p>
+                <div className="flex items-center gap-4 pt-2">
+                  <div className="h-[1px] w-12 bg-blue-600"></div>
+                  <span className="text-[9px] font-black text-blue-500 uppercase tracking-[0.4em]">First-to-Market Solution</span>
+                </div>
+              </div>
+
+              {/* Network Directory */}
+              <div className="space-y-6">
+                <h4 className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Network Directory</h4>
+                <ul className="space-y-3">
+                  <li><Link href="/discovery" className="text-[10px] text-gray-600 hover:text-blue-500 uppercase tracking-widest transition">Inventory Scan</Link></li>
+                  <li><Link href="/about/ecosystem" className="text-[10px] text-gray-600 hover:text-blue-500 uppercase tracking-widest transition">Ecosystem Audit</Link></li>
+                  <li><Link href="/vendor/register" className="text-[10px] text-gray-600 hover:text-blue-500 uppercase tracking-widest transition">Node Partnership</Link></li>
+                  <li><Link href="/category/startups" className="text-[10px] text-gray-600 hover:text-blue-500 uppercase tracking-widest transition">Startup Kickstart</Link></li>
+                </ul>
+              </div>
+
+              {/* Infrastructure Status */}
+              <div className="space-y-6">
+                <h4 className="text-[10px] font-black text-white uppercase tracking-[0.3em]">System Status</h4>
+                <div className="space-y-4">
+                  <div className="bg-[#111111] p-4 border border-gray-900">
+                    <p className="text-[8px] text-gray-600 uppercase mb-1">Active Nodes</p>
+                    <p className="text-xs font-mono text-white">42 VERIFIED</p>
+                  </div>
+                  <div className="bg-[#111111] p-4 border border-gray-900">
+                    <p className="text-[8px] text-gray-600 uppercase mb-1">Avg Delivery time</p>
+                    <p className="text-xs font-mono text-blue-500">65 MINS</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Footer: Compliance & Identity */}
+            <div className="pt-10 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="flex items-center gap-6">
+                <p className="text-[9px] uppercase tracking-[0.3em] text-gray-500">© 2026 TorqFix Engineering Solutions</p>
+                <span className="text-gray-900 hidden md:block">|</span>
+                <p className="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-bold">Noida Industrial Corridor HQ</p>
+              </div>
+
+              <div className="flex gap-8">
+                <Link href="/terms" className="text-[9px] text-gray-800 hover:text-gray-500 uppercase tracking-[0.2em] transition">SLA Terms</Link>
+                <Link href="/privacy" className="text-[9px] text-gray-800 hover:text-gray-500 uppercase tracking-[0.2em] transition">Data Encryption</Link>
+                <Link href="/support" className="text-[9px] text-gray-800 hover:text-gray-500 uppercase tracking-[0.2em] transition">Support Node</Link>
+              </div>
+            </div>
+            
+            {/* Final Aesthetic Trace */}
+            <div className="mt-10 text-center opacity-20">
+              <p className="text-[7px] font-mono text-gray-800 tracking-widest uppercase">
+                System_Identity: TORQFIX_V1.04 • Protocol: PERN_STACK • Node_Location: 28.5355° N, 77.3910° E
+              </p>
+            </div>
+          </div>
+        </footer>
     </div>
   );
 }

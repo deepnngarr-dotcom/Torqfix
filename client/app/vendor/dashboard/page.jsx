@@ -186,7 +186,7 @@ export default function VendorDashboard() {
         </section>
       </div>
 
-      {/* 🚀 RESTORED: Broadcast Modal */}
+      {/* Broadcast Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#0d0d0d] border border-gray-800 w-full max-w-5xl h-[85vh] flex overflow-hidden">
